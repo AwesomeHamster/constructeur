@@ -18,7 +18,7 @@
   "license": "MIT",
   "main": "dist/index.bundle.js",
   "scripts": {
-    "build": "ts-node ./src/index.ts build && tsc --emitDeclarationOnly",
+    "build": "ts-node ./src/index.ts build && tsc --emitDeclarationOnly src/**/*.ts",
     "dev": "ts-node ./src/index.ts --minify false && tsc --emitDeclarationOnly"
   },
   "bin": {
