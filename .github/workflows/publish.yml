@@ -1,0 +1,14 @@
+name: Publish
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: AwesomeHamster/actions-publish@master
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
