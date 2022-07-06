@@ -20,7 +20,10 @@
   "scripts": {
     "build": "ts-node ./src/index.ts build && yarn tsc",
     "dev": "ts-node ./src/index.ts --minify false && yarn tsc",
-    "tsc": "tsc --project tsconfig.prod.json --emitDeclarationOnly"
+    "tsc": "tsc --project tsconfig.prod.json --emitDeclarationOnly",
+    "lint": "eslint src/**/*.ts && yarn prettier --check",
+    "format": "yarn prettier --write",
+    "prettier": "prettier '**/*.{js,ts,json,yml,yaml,md}' '!dist/**/*'"
   },
   "bin": {
     "constructeur": "dist/index.bundle.js",
@@ -38,6 +41,7 @@
     "url": "https://github.com/AwesomeHamster/constructeur/issues"
   },
   "packageManager": "yarn@3.1.1",
+  "prettier": "@hamster-bot/prettier-config",
   "dependencies": {
     "cac": "^6.7.12",
     "esbuild": "^0.14.27",
