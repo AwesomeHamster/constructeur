@@ -2,7 +2,7 @@ import { readFile } from 'fs-extra'
 import { resolve } from 'path'
 
 import { CAC } from 'cac'
-import esbuild from 'esbuild'
+import esbuild, { BuildOptions } from 'esbuild'
 import yaml from 'js-yaml'
 
 const yamlPlugin = (options: yaml.LoadOptions = {}): esbuild.Plugin => ({
@@ -30,6 +30,7 @@ export function apply(cac: CAC): CAC {
   cac
     .command('build [config]')
     .option('minify', 'minify the bundle', { default: true })
+    .option('hybrid', 'build both esm and cjs', { default: false })
     .action(async (config, options) => {
       const pkg = JSON.parse(await readFile('./package.json', 'utf-8'))
       let entry = ['src/index.ts']
@@ -40,9 +41,8 @@ export function apply(cac: CAC): CAC {
         entry = c.entry ?? entry
         output = c.outfile ?? output
       }
-      esbuild.build({
+      const buildOption: BuildOptions = {
         bundle: true,
-        format: 'cjs',
         platform: 'node',
         target: 'node12',
         entryPoints: entry,
@@ -57,7 +57,19 @@ export function apply(cac: CAC): CAC {
         minify: options.minify,
         sourcemap: true,
         plugins: [yamlPlugin()],
+      }
+      esbuild.build({
+        ...buildOption,
+        format: 'cjs',
       })
+
+      if (options.hybrid) {
+        esbuild.build({
+          ...buildOption,
+          format: 'esm',
+          outfile: 'dist/index.esm.js',
+        })
+      }
     })
 
   return cac
