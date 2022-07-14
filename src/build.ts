@@ -67,7 +67,7 @@ export function apply(cac: CAC): CAC {
         esbuild.build({
           ...buildOption,
           format: 'esm',
-          outfile: 'dist/index.esm.js',
+          outfile: 'dist/index.esm.mjs',
         })
       }
     })
