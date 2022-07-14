@@ -1,30 +1,8 @@
 import { readFile } from 'fs-extra'
-import { resolve } from 'path'
 
 import { CAC } from 'cac'
 import esbuild, { BuildOptions } from 'esbuild'
-import yaml from 'js-yaml'
-
-const yamlPlugin = (options: yaml.LoadOptions = {}): esbuild.Plugin => ({
-  name: 'yaml',
-  setup(build) {
-    build.onResolve({ filter: /\.ya?ml$/ }, ({ path, resolveDir }) => {
-      if (resolveDir === '') return
-      return {
-        path: resolve(resolveDir, path),
-        namespace: 'yaml',
-      }
-    })
-
-    build.onLoad({ namespace: 'yaml', filter: /.*/ }, async ({ path }) => {
-      const source = await readFile(path, 'utf8')
-      return {
-        loader: 'json',
-        contents: JSON.stringify(yaml.load(source, options)),
-      }
-    })
-  },
-})
+import { yamlPlugin } from 'esbuild-plugin-yaml'
 
 export function apply(cac: CAC): CAC {
   cac
@@ -56,7 +34,7 @@ export function apply(cac: CAC): CAC {
         ],
         minify: options.minify,
         sourcemap: true,
-        plugins: [yamlPlugin()],
+        plugins: [yamlPlugin({})],
       }
       esbuild.build({
         ...buildOption,
