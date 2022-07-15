@@ -1,18 +1,22 @@
-import { CAC } from 'cac'
-import esbuild from 'esbuild'
-import { config, esmConfig } from './esbuild'
+import esbuild, { BuildOptions } from 'esbuild'
+import {
+  config as defaultConfig,
+  esmConfig as defaultEsmConfig,
+} from './esbuild'
 
-export function apply(cac: CAC): CAC {
-  cac
-    .command('build')
-    .option('hybrid', 'build both esm and cjs', { default: false })
-    .action(async (options) => {
-      await esbuild.build(config)
+type Options = BuildOptions & { hybrid?: boolean }
 
-      if (options.hybrid) {
-        await esbuild.build(esmConfig)
-      }
-    })
-
-  return cac
+export default async function build(
+  config?: Options | Options[],
+): Promise<void> {
+  if (!config) {
+    config = [defaultConfig]
+    if (config[0].hybrid) {
+      config.push(defaultEsmConfig)
+    }
+  }
+  if (!Array.isArray(config)) {
+    config = [config]
+  }
+  await Promise.all(config.map((c) => esbuild.build(c)))
 }
