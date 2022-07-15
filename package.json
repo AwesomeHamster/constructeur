@@ -19,7 +19,7 @@
   "main": "dist/index.bundle.js",
   "scripts": {
     "build": "ts-node ./src/index.ts build && yarn tsc",
-    "dev": "ts-node ./src/index.ts --minify false && yarn tsc",
+    "dev": "ts-node ./src/index.ts dev && yarn tsc",
     "tsc": "tsc --emitDeclarationOnly",
     "lint": "eslint src/**/*.ts && yarn prettier --check",
     "format": "yarn prettier --write",
@@ -31,7 +31,7 @@
   },
   "files": [
     "dist/*",
-    "tsconfig.json"
+    "tsconfig.base.json"
   ],
   "repository": {
     "type": "git",
@@ -43,8 +43,8 @@
   "packageManager": "yarn@3.1.1",
   "prettier": "@hamster-bot/prettier-config",
   "dependencies": {
-    "cac": "^6.7.12",
     "esbuild": "^0.14.27",
+    "esbuild-plugin-yaml": "^0.0.1",
     "fs-extra": "^10.0.1",
     "js-yaml": "^4.1.0"
   },
