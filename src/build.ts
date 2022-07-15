@@ -8,8 +8,9 @@ type Options = BuildOptions & { hybrid?: boolean }
 
 export default async function build(
   config?: Options | Options[],
+  override?: Options,
 ): Promise<void> {
-  if (!config) {
+  if (!config || (Array.isArray(config) && config.length === 0)) {
     config = [defaultConfig]
     if (config[0].hybrid) {
       config.push(defaultEsmConfig)
@@ -18,5 +19,7 @@ export default async function build(
   if (!Array.isArray(config)) {
     config = [config]
   }
-  await Promise.all(config.map((c) => esbuild.build(c)))
+  await Promise.all(
+    config.map((c) => esbuild.build({ ...c, ...(override ?? {}) })),
+  )
 }

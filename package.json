@@ -19,7 +19,7 @@
   "main": "dist/index.bundle.js",
   "scripts": {
     "build": "ts-node ./src/index.ts build && yarn tsc",
-    "dev": "ts-node ./src/index.ts --minify false && yarn tsc",
+    "dev": "ts-node ./src/index.ts dev && yarn tsc",
     "tsc": "tsc --emitDeclarationOnly",
     "lint": "eslint src/**/*.ts && yarn prettier --check",
     "format": "yarn prettier --write",
