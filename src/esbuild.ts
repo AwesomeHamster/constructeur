@@ -26,5 +26,6 @@ export const config: BuildOptions = {
 export const esmConfig: BuildOptions = {
   ...config,
   format: 'esm',
+  target: 'node16',
   outfile: 'dist/index.esm.mjs',
 }
