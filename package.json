@@ -17,6 +17,7 @@
   "homepage": "https://github.com/AwesomeHamster/constructeur",
   "license": "MIT",
   "main": "dist/index.bundle.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "ts-node ./src/index.ts build && yarn tsc",
     "dev": "ts-node ./src/index.ts dev && yarn tsc",
