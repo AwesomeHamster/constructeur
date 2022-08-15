@@ -1,4 +1,5 @@
-import esbuild, { BuildOptions } from 'esbuild'
+import { build as esbuildBuild, BuildOptions } from 'esbuild'
+
 import {
   config as defaultConfig,
 } from './esbuild'
@@ -16,6 +17,6 @@ export default async function build(
     config = [config]
   }
   await Promise.all(
-    config.map((c) => esbuild.build({ ...c, ...(override ?? {}) })),
+    config.map((c) => esbuildBuild({ ...c, ...(override ?? {}) })),
   )
 }
