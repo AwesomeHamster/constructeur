@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 import path from 'path'
-import yaml from 'js-yaml'
-import build from './build'
+
 import { readFile } from 'fs-extra'
+import yaml from 'js-yaml'
+
+import build from './build'
 export * from './esbuild'
 
 const args = process.argv.slice(2)
@@ -20,7 +22,7 @@ const [action, ...rest] = args
   }
 })()
 
-export async function readConfig(config: string): Promise<any> {
+export async function readConfig(config?: string): Promise<any> {
   if (!config) {
     return
   }

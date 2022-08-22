@@ -1,8 +1,9 @@
+import { CoreProperties } from '@schemastore/package'
 import { BuildOptions } from 'esbuild'
 import { yamlPlugin } from 'esbuild-plugin-yaml'
 import { readFileSync } from 'fs-extra'
 
-const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'))
+const pkg: CoreProperties = JSON.parse(readFileSync('./package.json', 'utf-8'))
 
 export const config: BuildOptions = {
   bundle: true,
@@ -11,13 +12,7 @@ export const config: BuildOptions = {
   target: 'node12',
   entryPoints: ['src/index.ts'],
   outfile: 'dist/index.bundle.js',
-  external: [
-    ...Object.keys({
-      ...(pkg.dependencies ?? {}),
-      ...(pkg.devDependencies ?? {}),
-      ...(pkg.peerDependencies ?? {}),
-    }),
-  ],
+  external: Object.keys(Object.assign({}, pkg.dependencies, pkg.devDependencies, pkg.peerDependencies)),
   minify: true,
   sourcemap: true,
   plugins: [yamlPlugin({})],
