@@ -47,7 +47,7 @@
     "yml-register": "^1.1.0"
   },
   "dependencies": {
-    "esbuild": "^0.15.5",
+    "esbuild": "^0.17.0",
     "esbuild-plugin-yaml": "^0.0.1",
     "fs-extra": "^10.1.0",
     "js-yaml": "^4.1.0"
