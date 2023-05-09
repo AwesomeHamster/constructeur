@@ -1,9 +1,9 @@
-import { CoreProperties } from '@schemastore/package'
+import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package'
 import { BuildOptions } from 'esbuild'
 import { yamlPlugin } from 'esbuild-plugin-yaml'
 import { readFileSync } from 'fs-extra'
 
-const pkg: CoreProperties = JSON.parse(readFileSync('./package.json', 'utf-8'))
+const pkg: JSONSchemaForNPMPackageJsonFiles = JSON.parse(readFileSync('./package.json', 'utf-8'))
 
 export const config: BuildOptions = {
   bundle: true,
